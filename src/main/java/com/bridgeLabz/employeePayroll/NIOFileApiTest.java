@@ -5,6 +5,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import org.junit.Assert;
@@ -46,6 +47,21 @@ public class NIOFileApiTest {
 		Path dir = Paths.get(HOME + "/" + PLAY_WITH_NIO);
 		Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
 		new JavaWatch8ServiceExample(dir).processEvents(); 
+	}
+	
+	@Test
+	public void writeDataAndGetEntriesCount() {
+		EmployeePayRollData[] arrEmployeePayRollDatas = {
+				new EmployeePayRollData(1,  "Ajay", 10000),
+				new EmployeePayRollData(2,  "barath", 20000),
+				new EmployeePayRollData(3,  "AjayB", 30000),
+		};
+		
+		EmployeePayRollService employeePayRollService = new EmployeePayRollService(Arrays.asList(arrEmployeePayRollDatas));
+		employeePayRollService.writeEmployeePayrollData(EmployeePayRollService.IOService.FILE_IO);
+		long entries = employeePayRollService.countEntries();
+		Assert.assertEquals(3, entries);
+	
 	}
 
 }
