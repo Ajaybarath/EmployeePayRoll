@@ -17,14 +17,14 @@ public class NIOFileApiTest {
 	private static final String PLAY_WITH_NIO = "TempFileTry";
 
 	@Test
-	public void givenPathWhenCheckedThenConfirm() {
+	public void givenPathWhenCheckedThenConfirm() throws IOException {
 		
 		Path homepath = Paths.get(HOME);
 		
 		Assert.assertTrue(Files.exists(homepath));
 		
 		Path playPath = Paths.get(HOME + "/" + PLAY_WITH_NIO);
-		if (Files.exists(playPath)) Files.deleteFiles(playPath.toFile());
+		if (Files.exists(playPath)) Files.deleteIfExists(playPath);
 		Assert.assertTrue(Files.notExists(playPath));
 		
 		IntStream.range(1, 10).forEach(cntr -> {
@@ -38,6 +38,14 @@ public class NIOFileApiTest {
 			}
 		});
 		
+	}
+	
+	
+	@Test
+	public void givenADirectoryWhenWatchedListAllTheActivities() throws IOException {
+		Path dir = Paths.get(HOME + "/" + PLAY_WITH_NIO);
+		Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+		new JavaWatch8ServiceExample(dir).processEvents(); 
 	}
 
 }
