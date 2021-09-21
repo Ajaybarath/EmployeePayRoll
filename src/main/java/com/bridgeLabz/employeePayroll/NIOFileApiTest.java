@@ -79,5 +79,20 @@ public class NIOFileApiTest {
 		Assert.assertEquals(3, entries);
 	
 	}
+	
+	@Test
+	public void readDataAndGetEntriesCount() throws IOException {
+		EmployeePayRollData[] arrEmployeePayRollDatas = {
+				new EmployeePayRollData(1,  "Ajay", 10000),
+				new EmployeePayRollData(2,  "barath", 20000),
+				new EmployeePayRollData(3,  "AjayB", 30000),
+		};
+		
+		EmployeePayRollService employeePayRollService = new EmployeePayRollService(Arrays.asList(arrEmployeePayRollDatas));
+		employeePayRollService.readEmployeePayrollData();
+		long entries = employeePayRollService.countEntries();
+		Assert.assertEquals(3, entries);
+	
+	}
 
 }
