@@ -56,7 +56,10 @@ public class EmployeePayRollService {
 			new EmployeePayrollFileIOService().writeData(employeePayRollList);
 		}
 	}
-	
+
+	public void printEntries() {
+		new EmployeePayrollFileIOService().printData();
+	}
 	
 	public long countEntries() {
 		return new EmployeePayrollFileIOService().countEnteries();
