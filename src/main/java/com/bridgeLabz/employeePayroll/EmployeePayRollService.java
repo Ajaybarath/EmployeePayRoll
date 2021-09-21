@@ -58,4 +58,9 @@ public class EmployeePayRollService {
 	}
 	
 	
+	public long countEntries() {
+		return new EmployeePayrollFileIOService().countEnteries();
+	}
+	
+	
 }
