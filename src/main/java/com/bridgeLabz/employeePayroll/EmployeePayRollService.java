@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.imageio.spi.IIOServiceProvider;
+
 public class EmployeePayRollService {
+	
+	public enum IOService{
+		CONSOLE_IO, FILE_IO
+	}
 
 	
 	private List<EmployeePayRollData> employeePayRollList;
@@ -39,4 +45,17 @@ public class EmployeePayRollService {
 		employeePayRollList.add(new EmployeePayRollData(id, name, salary));
 				
 	}
+	
+	
+	public void writeEmployeePayrollData(IOService ioservice) {
+		if (ioservice.equals(IOService.CONSOLE_IO)) {
+			System.out.println("Writing payroll roster to console" + employeePayRollList);
+			
+		}
+		else if (ioservice.equals(IOService.FILE_IO)) {
+			new EmployeePayrollFileIOService().writeData(employeePayRollList);
+		}
+	}
+	
+	
 }
