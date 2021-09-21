@@ -16,6 +16,13 @@ public class EmployeePayrollFileIOService {
 		});
 	}
 
+	public void printData() {
+
+		try {
+			Files.lines(new File("payroll-file.txt").toPath()).forEach(System.out::println);
+		} catch (IOException e) {
+		}
+	}
 
 	public long countEnteries() {
 		long entries = 0;
