@@ -1,6 +1,7 @@
 package com.bridgeLabz.employeePayroll;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,8 +10,12 @@ import javax.imageio.spi.IIOServiceProvider;
 
 public class EmployeePayRollService {
 
+	public EmployeePayRollService() {
+
+	}
+
 	public enum IOService {
-		CONSOLE_IO, FILE_IO
+		CONSOLE_IO, FILE_IO, DB_IO
 	}
 
 	private List<EmployeePayRollData> employeePayRollList;
@@ -61,6 +66,24 @@ public class EmployeePayRollService {
 		
 		System.out.println(list);
 
+	}
+
+	public List<EmployeePayRollData> readEmployeePayrollData(IOService service) throws SQLException {
+
+		if (service.equals(IOService.DB_IO)) {
+			this.employeePayRollList = new EmployeePayrollDBService().readData();
+		}
+		return employeePayRollList;
+	}
+
+	public void printList() {
+		for (EmployeePayRollData data : employeePayRollList){
+			System.out.println(data.getName());
+		}
+	}
+
+	public int listSize() {
+		return employeePayRollList.size();
 	}
 
 	public void printEntries() {
