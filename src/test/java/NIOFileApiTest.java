@@ -109,6 +109,15 @@ public class NIOFileApiTest {
 
 	}
 
+	@Test
+	public void readDatabaseAndUpdateTheDatabase() throws IOException, SQLException {
+
+		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
+		employeePayRollService.readEmployeePayrollData(EmployeePayRollService.IOService.DB_IO);
+		employeePayRollService.updateEmployeeData("Tresia", 2000);
+
+	}
+
 
 
 }
