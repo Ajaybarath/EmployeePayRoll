@@ -1,7 +1,10 @@
 package com.bridgeLabz.employeePayroll;
 
+import java.time.LocalDate;
+
 public class EmployeePayRollData {
-	
+
+	private LocalDate date;
 	private int id;
 	private String name;
 	private double salary;
@@ -13,6 +16,20 @@ public class EmployeePayRollData {
 		this.name = name;
 		this.salary = salary;
 	}
+
+	public EmployeePayRollData(int id, String name, double salary, LocalDate date) {
+		this(id, name, salary);
+		this.date = date;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
 	public int getId() {
 		return id;
 	}
