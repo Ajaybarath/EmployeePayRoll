@@ -99,7 +99,7 @@ public class NIOFileApiTest {
 	}
 
 	@Test
-	public void readDatabaseAndGetEntriesCount() throws IOException, SQLException {
+	public void readDatabaseAndGetEntriesCount() throws SQLException {
 
 		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
 		employeePayRollService.readEmployeePayrollData(EmployeePayRollService.IOService.DB_IO);
@@ -110,7 +110,7 @@ public class NIOFileApiTest {
 	}
 
 	@Test
-	public void readDatabaseAndUpdateTheDatabase() throws IOException, SQLException {
+	public void readDatabaseAndUpdateTheDatabase() throws SQLException {
 
 		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
 		employeePayRollService.readEmployeePayrollData(EmployeePayRollService.IOService.DB_IO);

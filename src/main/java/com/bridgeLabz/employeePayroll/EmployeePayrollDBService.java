@@ -20,35 +20,41 @@ public class EmployeePayrollDBService {
 
     }
 
-    public List<EmployeePayRollData> readData() throws SQLException {
+    public List<EmployeePayRollData> readData() throws EmployeePayrollException {
 
-        String sql = "Select * from employee";
-        List<EmployeePayRollData> employeePayRollDataList = new ArrayList<>();
-        Connection connection = getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
 
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String name = resultSet.getString("name");
-            double salary = resultSet.getDouble("salary");
-            LocalDate date = resultSet.getDate("start").toLocalDate();
-            employeePayRollDataList.add(new EmployeePayRollData(id, name, salary, date));
+        try {
+            String sql = "Select * from employee";
+            List<EmployeePayRollData> employeePayRollDataList = new ArrayList<>();
+            Connection connection = getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                double salary = resultSet.getDouble("salary");
+                LocalDate date = resultSet.getDate("start").toLocalDate();
+                employeePayRollDataList.add(new EmployeePayRollData(id, name, salary, date));
 
+            }
+
+            return employeePayRollDataList;
+        } catch (SQLException throwables) {
+            throw new EmployeePayrollException("Check db connectivity");
         }
 
-        return employeePayRollDataList;
+
     }
 
-    public int updateEmployeeData(String name, double salary) {
+    public int updateEmployeeData(String name, double salary) throws EmployeePayrollException {
         String sql = String.format("update employee set salary = %.2f where name = '%s';", salary, name);
         System.out.println(sql);
         try (Connection connection = this.getConnection()) {
             Statement statement = connection.createStatement();
             return statement.executeUpdate(sql);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            throw new EmployeePayrollException("Check db connectivity");
         }
-        return 0;
     }
 }

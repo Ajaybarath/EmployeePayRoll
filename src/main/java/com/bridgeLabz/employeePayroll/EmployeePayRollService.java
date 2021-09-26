@@ -68,7 +68,7 @@ public class EmployeePayRollService {
 
 	}
 
-	public void updateEmployeeData(String name, int salary) {
+	public void updateEmployeeData(String name, int salary) throws EmployeePayrollException {
 		int result = new EmployeePayrollDBService().updateEmployeeData(name, salary);
 		if (result == 0) {
 			return;
