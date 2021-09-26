@@ -68,6 +68,29 @@ public class EmployeePayRollService {
 
 	}
 
+	public void updateEmployeeData(String name, int salary) {
+		int result = new EmployeePayrollDBService().updateEmployeeData(name, salary);
+		if (result == 0) {
+			return;
+		}
+
+		EmployeePayRollData employeePayRollData = this.getEmployeePayrollData(name);
+		if (employeePayRollData != null) {
+			employeePayRollData.setSalary(salary);
+		}
+
+
+	}
+
+	private EmployeePayRollData getEmployeePayrollData(String name) {
+		EmployeePayRollData employeePayRollData = this.employeePayRollList.stream().filter(employeePayRollData1 -> employeePayRollData1.getName().equals(name))
+				.findFirst()
+				.orElse(null);
+
+		return employeePayRollData;
+
+	}
+
 	public List<EmployeePayRollData> readEmployeePayrollData(IOService service) throws SQLException {
 
 		if (service.equals(IOService.DB_IO)) {
