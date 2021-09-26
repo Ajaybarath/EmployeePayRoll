@@ -30,9 +30,9 @@ public class JavaWatch8ServiceExample {
 	}
 
 	private void registerDirMatchers(Path dir) {
-		WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-
-		dirWatchers.put(key, dir);
+//		WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+//
+//		dirWatchers.put(key, dir);
 	}
 
 	private void scanAndRegisterDirectories(Path start) throws IOException {
@@ -75,7 +75,7 @@ public class JavaWatch8ServiceExample {
 					}
 				}
 				else if(kind.equals(ENTRY_DELETE)) {
-					if (Files.isDirectory(child)) dirWatchers.remove(key));
+					if (Files.isDirectory(child)) dirWatchers.remove(key);
 				}
 			}
 			

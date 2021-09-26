@@ -3,6 +3,8 @@ package com.bridgeLabz.employeePayroll;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,15 @@ public class EmployeePayrollFileIOService {
 			String empDataString = employee.toString().concat("\n");
 			empBuffer.append(empDataString);
 		});
+
+		Path path = Paths.get("payroll-file.txt");
+		byte[] strToBytes = empBuffer.toString().getBytes();
+
+		try {
+			Files.write(path, strToBytes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<String> readData() throws IOException {
