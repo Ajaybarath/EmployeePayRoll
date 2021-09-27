@@ -108,4 +108,22 @@ public class EmployeePayrollDBService {
             throw new EmployeePayrollException(throwables.getMessage());
         }
     }
- }
+
+    public List<EmployeePayRollData> getEmployeePayrollDataByDateRange(String startDate, String endDate) throws EmployeePayrollException {
+
+        try {
+            String sql = "Select * from employee where start between '" + startDate + "' and '" + endDate + "'";
+            List<EmployeePayRollData> employeePayRollDataList;
+            Connection connection = getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            employeePayRollDataList = this.getEmployeePayrollData(resultSet);
+
+            return employeePayRollDataList;
+        } catch (SQLException throwables) {
+            throw new EmployeePayrollException(throwables.getMessage());
+        }
+
+    }
+}
