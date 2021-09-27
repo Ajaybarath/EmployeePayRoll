@@ -157,11 +157,26 @@ public class NIOFileApiTest {
 	public void getAvgSalaryOfEmployee() throws SQLException {
 
 		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
-		List<EmployeePayRollData> employeePayRollDataList = employeePayRollService.getAvgSumMinMaxEmployeeSalary("avg");
-		for (EmployeePayRollData data : employeePayRollDataList){
+
+		List<EmployeePayRollData> employeeAvgSalaryList = employeePayRollService.getAvgSumMinMaxEmployeeSalary("avg");
+		List<EmployeePayRollData> employeeMinSalaryList = employeePayRollService.getAvgSumMinMaxEmployeeSalary("min");
+		List<EmployeePayRollData> employeeMaxSalaryList = employeePayRollService.getAvgSumMinMaxEmployeeSalary("max");
+
+
+		for (EmployeePayRollData data : employeeAvgSalaryList){
 			System.out.println(data.getGender() + ", " + data.getSalary());
 		}
-		Assert.assertEquals(40000.0, employeePayRollDataList.get(0).getSalary(), 0.00);
+		for (EmployeePayRollData data : employeeMinSalaryList){
+			System.out.println(data.getGender() + ", " + data.getSalary());
+		}
+		for (EmployeePayRollData data : employeeMaxSalaryList){
+			System.out.println(data.getGender() + ", " + data.getSalary());
+		}
+		Assert.assertEquals(40000.0, employeeAvgSalaryList.get(0).getSalary(), 0.00);
+		Assert.assertEquals(30000.0, employeeMinSalaryList.get(0).getSalary(), 0.00);
+		Assert.assertEquals(50000.0, employeeMaxSalaryList.get(0).getSalary(), 0.00);
+
+
 
 	}
 
