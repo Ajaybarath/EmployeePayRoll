@@ -141,4 +141,16 @@ public class NIOFileApiTest {
 
 	}
 
+	@Test
+	public void getSumOfSalaryOfEmployee() throws SQLException {
+
+		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
+		List<EmployeePayRollData> employeePayRollDataList = employeePayRollService.getSumOfEmployeeSalary();
+		for (EmployeePayRollData data : employeePayRollDataList){
+			System.out.println(data.getGender() + ", " + data.getSalary());
+		}
+		Assert.assertEquals(160000.0, employeePayRollDataList.get(0).getSalary(), 0.00);
+
+	}
+
 }
