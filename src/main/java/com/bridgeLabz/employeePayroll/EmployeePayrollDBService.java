@@ -126,4 +126,23 @@ public class EmployeePayrollDBService {
         }
 
     }
+
+    public List<EmployeePayRollData> getSumOfEmployeeSalary() throws EmployeePayrollException {
+        try {
+            String sql = "select gender, sum(salary) from employee group by gender;";
+            List<EmployeePayRollData> employeePayRollDataList = new ArrayList<>();
+            Connection connection = getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                double salary = resultSet.getDouble("sum(salary)");
+                String gender = resultSet.getString("gender");
+                employeePayRollDataList.add(new EmployeePayRollData(salary, gender));
+            }
+            return employeePayRollDataList;
+        } catch (SQLException throwables) {
+            throw new EmployeePayrollException(throwables.getMessage());
+        }
+    }
 }
