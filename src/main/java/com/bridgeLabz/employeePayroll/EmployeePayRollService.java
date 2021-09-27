@@ -105,6 +105,10 @@ public class EmployeePayRollService {
 		return employeePayrollDBService.getEmployeePayrollData(name);
 	}
 
+	public List<EmployeePayRollData> getEmployeePayrollDataByDateRange(String startDate, String endDate) throws EmployeePayrollException {
+		return employeePayrollDBService.getEmployeePayrollDataByDateRange(startDate, endDate);
+	}
+
 	public void printList() {
 		for (EmployeePayRollData data : employeePayRollList){
 			System.out.println(data.getName());
