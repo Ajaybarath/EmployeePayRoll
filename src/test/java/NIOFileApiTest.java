@@ -157,11 +157,23 @@ public class NIOFileApiTest {
 	public void getAvgSalaryOfEmployee() throws SQLException {
 
 		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
-		List<EmployeePayRollData> employeePayRollDataList = employeePayRollService.getAvgEmployeeSalary();
+		List<EmployeePayRollData> employeePayRollDataList = employeePayRollService.getAvgSumMinMaxEmployeeSalary("avg");
 		for (EmployeePayRollData data : employeePayRollDataList){
 			System.out.println(data.getGender() + ", " + data.getSalary());
 		}
 		Assert.assertEquals(40000.0, employeePayRollDataList.get(0).getSalary(), 0.00);
+
+	}
+
+	@Test
+	public void getGenderCountOfEmployee() throws SQLException {
+
+		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
+		List<EmployeePayRollData> employeePayRollDataList = employeePayRollService.getEmployeeCountByGender();
+		for (EmployeePayRollData data : employeePayRollDataList){
+			System.out.println(data.getGender() + ", " + data.getSalary());
+		}
+		Assert.assertEquals(4, employeePayRollDataList.get(0).getSalary(), 0.00);
 
 	}
 
