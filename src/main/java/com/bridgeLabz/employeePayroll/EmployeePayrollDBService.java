@@ -146,16 +146,35 @@ public class EmployeePayrollDBService {
         }
     }
 
-    public List<EmployeePayRollData> getAvgEmployeeSalary() throws EmployeePayrollException {
+    public List<EmployeePayRollData> getAvgSumMinMaxEmployeeSalary(String data) throws EmployeePayrollException {
         try {
-            String sql = "select gender, avg(salary) from employee group by gender;";
+            String sql = "select gender, " + data + "(salary) from employee group by gender;";
             List<EmployeePayRollData> employeePayRollDataList = new ArrayList<>();
             Connection connection = getConnection();
             Statement statement = null;
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                double salary = resultSet.getDouble("avg(salary)");
+                double salary = resultSet.getDouble(data + "(salary)");
+                String gender = resultSet.getString("gender");
+                employeePayRollDataList.add(new EmployeePayRollData(salary, gender));
+            }
+            return employeePayRollDataList;
+        } catch (SQLException throwables) {
+            throw new EmployeePayrollException(throwables.getMessage());
+        }
+    }
+
+    public List<EmployeePayRollData> getEmployeeCountByGender() throws EmployeePayrollException {
+        try {
+            String sql = "select gender, count(gender) from employee group by gender;";
+            List<EmployeePayRollData> employeePayRollDataList = new ArrayList<>();
+            Connection connection = getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                double salary = resultSet.getDouble("count(gender)");
                 String gender = resultSet.getString("gender");
                 employeePayRollDataList.add(new EmployeePayRollData(salary, gender));
             }

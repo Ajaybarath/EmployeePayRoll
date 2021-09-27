@@ -115,8 +115,12 @@ public class EmployeePayRollService {
 	}
 
 
-	public List<EmployeePayRollData> getAvgEmployeeSalary() throws EmployeePayrollException {
-		return employeePayrollDBService.getAvgEmployeeSalary();
+	public List<EmployeePayRollData> getAvgSumMinMaxEmployeeSalary(String data) throws EmployeePayrollException {
+		return employeePayrollDBService.getAvgSumMinMaxEmployeeSalary(data);
+
+	}
+	public List<EmployeePayRollData> getEmployeeCountByGender() throws EmployeePayrollException {
+		return employeePayrollDBService.getEmployeeCountByGender();
 
 	}
 
