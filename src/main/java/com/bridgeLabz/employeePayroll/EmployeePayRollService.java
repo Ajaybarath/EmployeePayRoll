@@ -14,7 +14,6 @@ public class EmployeePayRollService {
 		employeePayrollDBService = EmployeePayrollDBService.getInstance();
 	}
 
-
 	public enum IOService {
 		CONSOLE_IO, FILE_IO, DB_IO
 	}
@@ -113,6 +112,12 @@ public class EmployeePayRollService {
 
 	public List<EmployeePayRollData> getSumOfEmployeeSalary() throws EmployeePayrollException {
 		return employeePayrollDBService.getSumOfEmployeeSalary();
+	}
+
+
+	public List<EmployeePayRollData> getAvgEmployeeSalary() throws EmployeePayrollException {
+		return employeePayrollDBService.getAvgEmployeeSalary();
+
 	}
 
 	public void printList() {
