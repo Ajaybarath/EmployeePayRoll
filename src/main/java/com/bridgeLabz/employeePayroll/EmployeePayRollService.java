@@ -11,12 +11,14 @@ import javax.imageio.spi.IIOServiceProvider;
 public class EmployeePayRollService {
 
 	public EmployeePayRollService() {
-
+		employeePayrollDBService = EmployeePayrollDBService.getInstance();
 	}
 
 	public enum IOService {
 		CONSOLE_IO, FILE_IO, DB_IO
 	}
+
+	EmployeePayrollDBService employeePayrollDBService;
 
 	private List<EmployeePayRollData> employeePayRollList;
 
@@ -69,7 +71,7 @@ public class EmployeePayRollService {
 	}
 
 	public void updateEmployeeData(String name, int salary) throws EmployeePayrollException {
-		int result = new EmployeePayrollDBService().updateEmployeeData(name, salary);
+		int result = employeePayrollDBService.updateEmployeeData(name, salary);
 		if (result == 0) {
 			return;
 		}
@@ -82,7 +84,7 @@ public class EmployeePayRollService {
 
 	}
 
-	private EmployeePayRollData getEmployeePayrollData(String name) {
+	public EmployeePayRollData getEmployeePayrollData(String name) {
 		EmployeePayRollData employeePayRollData = this.employeePayRollList.stream().filter(employeePayRollData1 -> employeePayRollData1.getName().equals(name))
 				.findFirst()
 				.orElse(null);
@@ -94,9 +96,13 @@ public class EmployeePayRollService {
 	public List<EmployeePayRollData> readEmployeePayrollData(IOService service) throws SQLException {
 
 		if (service.equals(IOService.DB_IO)) {
-			this.employeePayRollList = new EmployeePayrollDBService().readData();
+			this.employeePayRollList = employeePayrollDBService.readData();
 		}
 		return employeePayRollList;
+	}
+
+	public List<EmployeePayRollData> getEmployeePayrollDataByName(String name) throws EmployeePayrollException {
+		return employeePayrollDBService.getEmployeePayrollData(name);
 	}
 
 	public void printList() {
