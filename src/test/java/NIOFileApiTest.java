@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import com.bridgeLabz.employeePayroll.EmployeePayRollData;
@@ -118,6 +119,15 @@ public class NIOFileApiTest {
 
 	}
 
+	@Test
+	public void getEmployeePayrollDataByName() throws SQLException {
 
+		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
+		List<EmployeePayRollData> employeePayRollDataList = employeePayRollService.getEmployeePayrollDataByName("Tresia");
+		employeePayRollService.readEmployeePayrollData(EmployeePayRollService.IOService.DB_IO);
+
+		Assert.assertEquals("Tresia", employeePayRollDataList.get(0).getName());
+
+	}
 
 }
