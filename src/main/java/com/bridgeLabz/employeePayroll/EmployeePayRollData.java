@@ -8,6 +8,7 @@ public class EmployeePayRollData {
 	private int id;
 	private String name;
 	private double salary;
+	private String gender;
 	
 	
 	public EmployeePayRollData(int id, String name, double salary) {
@@ -20,6 +21,19 @@ public class EmployeePayRollData {
 	public EmployeePayRollData(int id, String name, double salary, LocalDate date) {
 		this(id, name, salary);
 		this.date = date;
+	}
+
+    public EmployeePayRollData(double salary, String gender) {
+		this.gender = gender;
+		this.salary = salary;
+    }
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public LocalDate getDate() {
