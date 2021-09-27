@@ -124,8 +124,19 @@ public class NIOFileApiTest {
 
 		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
 		List<EmployeePayRollData> employeePayRollDataList = employeePayRollService.getEmployeePayrollDataByName("Tresia");
-		employeePayRollService.readEmployeePayrollData(EmployeePayRollService.IOService.DB_IO);
 
+		Assert.assertEquals("Tresia", employeePayRollDataList.get(0).getName());
+
+	}
+
+	@Test
+	public void getEmployeePayrollDataByDate() throws SQLException {
+
+		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
+		List<EmployeePayRollData> employeePayRollDataList = employeePayRollService.getEmployeePayrollDataByDateRange("2021-03-01", "2021-12-01");
+		for (EmployeePayRollData data : employeePayRollDataList){
+			System.out.println(data.getName());
+		}
 		Assert.assertEquals("Tresia", employeePayRollDataList.get(0).getName());
 
 	}
