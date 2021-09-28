@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -189,6 +190,17 @@ public class NIOFileApiTest {
 			System.out.println(data.getGender() + ", " + data.getSalary());
 		}
 		Assert.assertEquals(4, employeePayRollDataList.get(0).getSalary(), 0.00);
+
+	}
+
+	@Test
+	public void addEmployeeToPayroll() throws SQLException {
+
+		EmployeePayRollService employeePayRollService = new EmployeePayRollService();
+		EmployeePayRollData employeePayRollDataList = employeePayRollService.addEmployeeToPayroll("Ajay", 'M', 23000, LocalDate.now());
+		employeePayRollService.getEmployeePayrollDataByName("Ajay");
+
+//		Assert.assertEquals(4, employeePayRollDataList.get(0).getSalary(), 0.00);
 
 	}
 
