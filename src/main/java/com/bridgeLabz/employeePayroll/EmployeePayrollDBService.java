@@ -191,7 +191,13 @@ public class EmployeePayrollDBService {
         EmployeePayRollData employeePayRollData = null;
         try {
             connection = this.getConnection();
+            connection.setAutoCommit(false);
         } catch (SQLException throwables) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             throwables.printStackTrace();
         }
 
@@ -203,6 +209,11 @@ public class EmployeePayrollDBService {
                 if (resultSet.next()) employeeId = resultSet.getInt(1);
             }
         } catch (SQLException throwables) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             throwables.printStackTrace();
         }
 
@@ -218,7 +229,27 @@ public class EmployeePayrollDBService {
                 employeePayRollData = new EmployeePayRollData(employeeId, name, salary, date);
             }
         } catch (SQLException throwables) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             throwables.printStackTrace();
+        }
+
+        try {
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        finally {
+            if (connection != null){
+                try {
+                    connection.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
         }
 
         return employeePayRollData;
