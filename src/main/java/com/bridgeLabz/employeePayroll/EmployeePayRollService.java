@@ -2,6 +2,7 @@ package com.bridgeLabz.employeePayroll;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -122,6 +123,10 @@ public class EmployeePayRollService {
 	public List<EmployeePayRollData> getEmployeeCountByGender() throws EmployeePayrollException {
 		return employeePayrollDBService.getEmployeeCountByGender();
 
+	}
+
+	public EmployeePayRollData addEmployeeToPayroll(String name, char gender, int salary, LocalDate date) {
+		return employeePayrollDBService.addEmployeeToPayroll(name, gender, salary, date);
 	}
 
 	public void printList() {
