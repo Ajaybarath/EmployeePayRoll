@@ -129,6 +129,10 @@ public class EmployeePayRollService {
 		return employeePayrollDBService.addEmployeeToPayroll(name, gender, salary, date);
 	}
 
+	public EmployeeDepartment addEmployeeDepartment(String department, String name) throws EmployeePayrollException {
+		return employeePayrollDBService.addDepartmentToEmployee(department, name);
+	}
+
 	public void printList() {
 		for (EmployeePayRollData data : employeePayRollList){
 			System.out.println(data.getName());

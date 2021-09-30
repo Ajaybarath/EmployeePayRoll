@@ -26,10 +26,10 @@ public class EmployeePayrollDBService {
         String password = "ajaybarath1999";
         Connection connection;
 
-       System.out.println("Connecting to database : " + jdbcURL);
-       connection = DriverManager.getConnection(jdbcURL, userName, password);
-       System.out.println("Connection is successfull : " + connection);
-       return connection;
+        System.out.println("Connecting to database : " + jdbcURL);
+        connection = DriverManager.getConnection(jdbcURL, userName, password);
+        System.out.println("Connection is successfull : " + connection);
+        return connection;
 
     }
 
@@ -201,8 +201,8 @@ public class EmployeePayrollDBService {
             throwables.printStackTrace();
         }
 
-        try(Statement statement = connection.createStatement()) {
-            String sql = String.format("insert into employee ( name, salary, start, gender ) value ('%s', %s, '%s', '%s');", name, salary, date, gender );
+        try (Statement statement = connection.createStatement()) {
+            String sql = String.format("insert into employee ( name, salary, start, gender ) value ('%s', %s, '%s', '%s');", name, salary, date, gender);
             int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
             if (rowAffected == 1) {
                 ResultSet resultSet = statement.getGeneratedKeys();
@@ -217,7 +217,7 @@ public class EmployeePayrollDBService {
             throwables.printStackTrace();
         }
 
-        try(Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             double deduction = salary * 0.2;
             double taxable_pay = salary - deduction;
             double tax = taxable_pay * 0.1;
@@ -241,9 +241,8 @@ public class EmployeePayrollDBService {
             connection.commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }
-        finally {
-            if (connection != null){
+        } finally {
+            if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException throwables) {
@@ -254,4 +253,93 @@ public class EmployeePayrollDBService {
 
         return employeePayRollData;
     }
+
+    public int getDepartmentId(String department) throws EmployeePayrollException {
+        try {
+            String sql = "Select * from department where name = '" + department + "';";
+            Connection connection = getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            int id = resultSet.getInt("id");
+
+            return id;
+        } catch (SQLException throwables) {
+            throw new EmployeePayrollException(throwables.getMessage());
+        }
+    }
+
+    public int getEmployeeId(String name) throws EmployeePayrollException {
+        try {
+            String sql = "Select * from employee where name = '" + name + "';";
+            System.out.println(sql);
+            Connection connection = getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            int id = resultSet.getInt("id");
+
+            return id;
+        } catch (SQLException throwables) {
+            throw new EmployeePayrollException(throwables.getMessage());
+        }
+    }
+
+
+    public EmployeeDepartment addDepartmentToEmployee(String department, String name) throws EmployeePayrollException {
+        int emp_id = this.getEmployeeId(name);
+        int department_id = this.getDepartmentId(department);
+
+        Connection connection = null;
+        try {
+            connection = this.getConnection();
+            connection.setAutoCommit(false);
+        } catch (SQLException throwables) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        }
+
+        EmployeeDepartment employeeDepartment  = null;
+
+        try (Statement statement = connection.createStatement()) {
+            String sql = String.format("insert into employee_department ( emp_id, dept_id) value ('%s', %s);", emp_id, department_id);
+            int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
+            if (rowAffected == 1) {
+                ResultSet resultSet = statement.getGeneratedKeys();
+               employeeDepartment = new EmployeeDepartment(emp_id, department_id);
+            }
+        } catch (SQLException throwables) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        }
+
+        try {
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+
+        return employeeDepartment;
+
+    }
+
+
 }
