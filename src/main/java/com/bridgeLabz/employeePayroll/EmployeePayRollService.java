@@ -133,6 +133,10 @@ public class EmployeePayRollService {
 		return employeePayrollDBService.addDepartmentToEmployee(department, name);
 	}
 
+	public Department addDepartment(String department) {
+		return employeePayrollDBService.addDepartment(department);
+	}
+
 	public void printList() {
 		for (EmployeePayRollData data : employeePayRollList){
 			System.out.println(data.getName());

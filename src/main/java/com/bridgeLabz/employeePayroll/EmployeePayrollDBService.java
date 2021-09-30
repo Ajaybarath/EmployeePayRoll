@@ -342,4 +342,56 @@ public class EmployeePayrollDBService {
     }
 
 
+    public Department addDepartment(String name) {
+
+        Connection connection = null;
+        try {
+            connection = this.getConnection();
+            connection.setAutoCommit(false);
+        } catch (SQLException throwables) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        }
+
+        Department department  = null;
+
+        try (Statement statement = connection.createStatement()) {
+            String sql = String.format("insert into department ( name) value ('%s');", name);
+            int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
+            if (rowAffected == 1) {
+                int dept_id = 0;
+                ResultSet resultSet = statement.getGeneratedKeys();
+                if (resultSet.next())
+                    dept_id = resultSet.getInt(1);
+                department = new Department(dept_id, name);
+            }
+        } catch (SQLException throwables) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            throwables.printStackTrace();
+        }
+
+        try {
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+
+        return department;
+    }
 }
