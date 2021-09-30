@@ -122,7 +122,7 @@ public class DBIOTest {
         EmployeeDepartment employeeDepartment= employeePayRollService.addEmployeeDepartment("marketing", "Ajay");
 
         Assert.assertEquals(2, employeeDepartment.getDepartment_id());
-        Assert.assertEquals(15, employeeDepartment.getEmp_id());
+        Assert.assertEquals(15, employeeDepartment.getEmp_id()); 
 
 
     }
