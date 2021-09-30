@@ -1,3 +1,4 @@
+import com.bridgeLabz.employeePayroll.Department;
 import com.bridgeLabz.employeePayroll.EmployeeDepartment;
 import com.bridgeLabz.employeePayroll.EmployeePayRollData;
 import com.bridgeLabz.employeePayroll.EmployeePayRollService;
@@ -122,7 +123,18 @@ public class DBIOTest {
         EmployeeDepartment employeeDepartment= employeePayRollService.addEmployeeDepartment("marketing", "Ajay");
 
         Assert.assertEquals(2, employeeDepartment.getDepartment_id());
-        Assert.assertEquals(15, employeeDepartment.getEmp_id()); 
+        Assert.assertEquals(15, employeeDepartment.getEmp_id());
+
+
+    }
+
+    @Test
+    public void addDepartment() throws SQLException {
+
+        EmployeePayRollService employeePayRollService = new EmployeePayRollService();
+
+        Department department = employeePayRollService.addDepartment("developer");
+        Assert.assertEquals("developer", department.getName());
 
 
     }
